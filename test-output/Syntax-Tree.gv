@@ -1,0 +1,11 @@
+// Syntax Tree
+graph {
+	1 [label="assign
+(x)" shape=square]
+	2 [label="const
+(2)"]
+	3 [label="assign
+(END)" shape=square]
+	1 -- 2
+	1 -- 3 [constraint=false]
+}

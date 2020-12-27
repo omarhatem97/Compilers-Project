@@ -114,7 +114,7 @@ def scanner(given_lines):
                 elif(char in specialsymbols):
                         currentstate='start'
                         mytoken = token(char,"special symbols")
-                        outputs.append(mytoken) 
+                        outputs.append(mytoken)
     return outputs
 
 

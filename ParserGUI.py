@@ -9,54 +9,56 @@ import grammar as gr
 import scanner as src
 win = tk.Tk()
 var = IntVar()
-
 def readfromfile(INPUTFILE):
     inFile = open(INPUTFILE, 'r') # read from file
     lines = inFile.readlines()
     inFile.close()
     return lines
-
-
 def main(lines):
-    gr.outputs = src.scanner(lines) #outputs list -> list of scanner outputs
-    gr.program() #call the grammer program from grammer module
+    gr.outputs = src.scanner(lines)
+    gr.program()
     gr.generate_tree()
-win.title("Parser CSE 2019")
-win.configure(background='#2f4f4f')
-win.geometry("700x600")
+win.title("Tiny Language Parser")
+win.configure(background='#303138')
+win.geometry("850x650")
+win.geometry("850x650")
 win.resizable(False,False)
 
 #----------------------------
 #labels in the middle
 #----------------------------
 
-label1 = tk.Label(win, text="No option is selected!!",bg="#2f4f4f", fg="white")
+label1 = tk.Label(win, text="No option is selected!!" ,fg="#78224A")
 label1.pack()
-label2 = tk.Label(win, text="Status: (waiting for inputs)", bg="#2f4f4f", fg="white")
+label1.place(bordermode=OUTSIDE, x=10, y=10)
+
+label2 = tk.Label(win, text="Status: (waiting for inputs)",  fg="#78224A")
 label2.pack()
-label3 = tk.Label(win, text="", bg="#2f4f4f", fg="white")
+label2.place(bordermode=OUTSIDE, x=700, y=10)
+
+label3 = tk.Label(win, text="", bg="#303138", fg="white", font='Helvetica 10 bold')
 label3.pack()
 
 #----------------------------
 #TINY label in the LEFT
 #----------------------------
 
-Tiny = tk.Label(win , text= "TINY language Parse", width= 17, height= 2, bg = "black", fg= "white")
-Tiny.pack()
-Tiny.place(bordermode=INSIDE, x=1,y = 10)
+# Tiny = tk.Label(win , text= "TINY language Parse", width= 17, height= 2, bg = "black", fg= "white")
+# Tiny.pack()
+# Tiny.place(bordermode=INSIDE, x=1,y = 10)
 
 #----------------------------
 #label above RUN button
 #----------------------------
 
-L1 = tk.Label(win , text= "Click Run to parse:", bg="#2f4f4f", fg="black")
-L1.pack()
-L1.place(bordermode=INSIDE, x=585, y=505)
+# L1 = tk.Label(win , text= "Click Run to parse:", bg="#2f4f4f", fg="black")
+# L1.pack()
+# L1.place(bordermode=INSIDE, x=585, y=505)
 #----------------------------
 #label above RADIO BUTTON
 #----------------------------
 
-L2 = tk.Label(win , text= "Choose your entry method: (Directory/Code)", bg="#2f4f4f", fg="white")
+L2 = tk.Label(win , text= "Please choose your Input method :",  fg="#78224A")
 L2.pack()
 L2.place(bordermode=INSIDE, x=10, y=65)
 
@@ -66,7 +68,7 @@ L2.place(bordermode=INSIDE, x=10, y=65)
 
 E1 = Entry(win, width = 70)
 E1.pack()
-E1.place(bordermode=OUTSIDE, x=100, y=145)
+E1.place(bordermode=OUTSIDE, x=200, y=90)
 
 #----------------------------
 #Entry of Code
@@ -80,15 +82,15 @@ E2.place(x= 10, y= 210)
 #label above Directory Entry
 #----------------------------
 
-Dir = tk.Label(win , text= "Enter Directory:", bg="#2f4f4f", fg="white")
+Dir = tk.Label(win , text= "Enter Path:")
 Dir.pack()
-Dir.place(bordermode=INSIDE, x=10, y=145)
+Dir.place(bordermode=INSIDE, x=100, y=90)
 
 #----------------------------
 #label above Code Entry
 #----------------------------
 
-Code = tk.Label(win , text= "Enter Code:", bg="#2f4f4f", fg="white")
+Code = tk.Label(win , text= "Enter Code:")
 Code.pack()
 Code.place(bordermode=INSIDE, x=10, y=180)
 
@@ -149,22 +151,22 @@ def show():
 #Buttons:
 #----------------------------
 
-R1 = Radiobutton(win, text = "Directory", selectcolor= "black", highlightcolor = "black", activebackground="#2f4f4f", bg="#2f4f4f", fg="white", variable = var, value = 1, command = sel)
+R1 = Radiobutton(win, text = "Directory", selectcolor= "black", highlightcolor = "black", activebackground="#2f4f4f", variable = var, value = 1, command = sel)
 R1.pack()
 R1.place(bordermode=OUTSIDE, x=20, y=90)
 
-R2 = Radiobutton(win, text = "Code", selectcolor= "black", highlightcolor = "black",activebackground="#2f4f4f", bg="#2f4f4f", fg="white", variable = var, value = 2, command = sel)
+R2 = Radiobutton(win, text = "Code", selectcolor= "black", highlightcolor = "black",activebackground="#2f4f4f", variable = var, value = 2, command = sel)
 R2.pack()
 R2.place(bordermode=OUTSIDE, x=20, y=110)
 Run = tk.Button(win, text = "Run", command = main_RUN,  width = 10,activebackground= "black", activeforeground = "green")
 Run.pack()
-Run.place(x=595, y=540)
+Run.place(x=300, y=600)
 OpenFile = tk.Button(win, text = "Open File", command = OpenFileGui,  width = 10,activebackground= "black", activeforeground = "green")
 OpenFile.pack()
-OpenFile.place(x=595, y=144)
+OpenFile.place(x=650, y=90)
 SHOW = tk.Button(win, text = "Show", command = show, width = 10,activebackground= "black", activeforeground = "green")
 SHOW.pack()
-SHOW.place(x=595, y=210)
+SHOW.place(x=750, y=90)
 
 win.mainloop()
 

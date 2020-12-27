@@ -16,7 +16,7 @@ class node:
     value = ""
     nodeNumber = 0
     connectParent = True
-    def __init__(self,value,nodeNumber, parentNode):
+    def __init__(self,value, nodeNumber, parentNode):
         self.nodeNumber = nodeNumber
         self.parentNode = parentNode
         self.value = value
@@ -29,7 +29,7 @@ class node:
                 return True
         return False
 
-    def getvalue(self):
+    def getNodeNumber(self):
         return self.nodeNumber
 #End class Node
 
@@ -64,8 +64,8 @@ def statment():
         newnode = node(outputs[iterator].tokenvalue,currentnode, Parents[-1])
         newnode.connectParent =connectParent
         Nodes.append(newnode)
-        currentnode = newnode.getvalue() + 1
-        Parents.append(newnode.getvalue())
+        currentnode = newnode.getNodeNumber() + 1
+        Parents.append(newnode.getNodeNumber())
         if(outputs[iterator].tokenvalue=="if"):
             if_stmt()
             Parents.pop()
@@ -156,9 +156,9 @@ def comparison_exp():
     global iterator,currentnode
     newnode = node("Op\n("+outputs[iterator].tokenvalue+")",currentnode, Parents[-1])
     Nodes.append(newnode)
-    Parents.append(newnode.getvalue())
+    Parents.append(newnode.getNodeNumber())
     Nodes[currentnode-2].parentNode = Parents[-1]
-    currentnode = newnode.getvalue() + 1
+    currentnode = newnode.getNodeNumber() + 1
     if(outputs[iterator].tokenvalue=="<"):
         match("<")
     elif(outputs[iterator].tokenvalue=="="):
@@ -169,9 +169,9 @@ def addop():
     global iterator,currentnode
     newnode = node("Op\n("+outputs[iterator].tokenvalue+")",currentnode, Parents[-1])
     Nodes.append(newnode)
-    Parents.append(newnode.getvalue())
+    Parents.append(newnode.getNodeNumber())
     Nodes[currentnode-2].parentNode = Parents[-1]
-    currentnode = newnode.getvalue() + 1
+    currentnode = newnode.getNodeNumber() + 1
     if(outputs[iterator].tokenvalue=="+"):
         match("+")
     elif(outputs[iterator].tokenvalue=="-"):
@@ -195,9 +195,9 @@ def mulop():
     global iterator,currentnode
     newnode = node("Op\n("+outputs[iterator].tokenvalue+")",currentnode, Parents[-1])
     Nodes.append(newnode)
-    Parents.append(newnode.getvalue())
+    Parents.append(newnode.getNodeNumber())
     Nodes[currentnode-2].parentNode = Parents[-1]
-    currentnode = newnode.getvalue() + 1
+    currentnode = newnode.getNodeNumber() + 1
     if(outputs[iterator].tokenvalue=="*"):
         match("*")
     elif(outputs[iterator].tokenvalue=="/"):
@@ -213,12 +213,12 @@ def factor():
     elif(outputs[iterator].is_NUM()):
         newnode = node("const\n("+outputs[iterator].tokenvalue+")",currentnode, Parents[-1])
         Nodes.append(newnode)
-        currentnode = newnode.getvalue() + 1
+        currentnode = newnode.getNodeNumber() + 1
         match("NUM")
     elif(outputs[iterator].is_ID()):
         newnode = node("ID\n("+outputs[iterator].tokenvalue+")",currentnode, Parents[-1])
         Nodes.append(newnode)
-        currentnode = newnode.getvalue() + 1
+        currentnode = newnode.getNodeNumber() + 1
         match("ID")
 
 
@@ -227,20 +227,20 @@ def generate_tree():
     dot = Graph(comment='Syntax Tree',format = 'png')
     for Node in Nodes:
         if(Node.is_statment()):
-            dot.node(str(Node.Node),Node.value,shape='square')
+            dot.node(str(Node.getNodeNumber()),Node.value,shape='square')
         else:
-            dot.node(str(Node.Node),Node.value)
+            dot.node(str(Node.getNodeNumber()),Node.value)
     for Node in Nodes:
         if(Node.parentNode!=0)and (Node.connectParent):
-            dot.edge(str(Node.parentNode),str(Node.Node))
+            dot.edge(str(Node.parentNode),str(Node.getNodeNumber()))
         elif (Node.parentNode!=0):
-            dot.edge(str(Node.parentNode),str(Node.Node),style='dashed', color='white')
+            dot.edge(str(Node.parentNode),str(Node.getNodeNumber()),style='dashed', color='white')
     for number in range(len(Nodes)):
         for number2 in range(number+1,len(Nodes)):
             if((Nodes[number].parentNode==Nodes[number2].parentNode) and
             (not Nodes[number2].connectParent)and
             Nodes[number2].is_statment() and (Nodes[number].is_statment())):
-                dot.edge(str(Nodes[number].Node),str(Nodes[number2].Node),constraint='false')
+                dot.edge(str(Nodes[number].getNodeNumber()),str(Nodes[number2].getNodeNumber()),constraint='false')
                 break
             elif((Nodes[number].parentNode==Nodes[number2].parentNode) and
             (Nodes[number2].connectParent)and
