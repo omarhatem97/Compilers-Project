@@ -24,9 +24,8 @@ symbolsToType = {
 
 
 def saveTokens(outputs):
-    """save tokens to file 'scannerTokens.txt"""
+    """ save tokens to file 'scannerTokens.txt' """
     f = open("scannerTokens.txt", "w")
-    tokenType = ''
     for i in outputs:
         if(i.tokentype == 'reserved words' or i.tokentype == 'special symbols'):
             tokenType = symbolsToType[i.tokenvalue]

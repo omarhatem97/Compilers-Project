@@ -4,24 +4,56 @@ os.environ["PATH"] += os.pathsep + dirpath + os.pathsep + 'graphviz-2.38\\releas
 from tkinter import *
 from tkinter import Entry
 from tkinter.filedialog import askopenfilename
+from scanner import token
 import tkinter as tk
 import grammar as gr
 import scanner as src
 win = tk.Tk()
 var = IntVar()
+
+
 def readfromfile(INPUTFILE):
     inFile = open(INPUTFILE, 'r') # read from file
     lines = inFile.readlines()
     inFile.close()
     return lines
+
+def parser_input(lines):
+    """takes lines of tokens and convert it to the shape of outputs list in Scanner.py"""
+    outputs = []
+    for l in lines:
+        tokens = l.split(',') #tokens[0] -> tokenvalue  #token[1]--> tokentype
+        if('IDENTIFIER' in l):
+            temp = token(tokens[0], 'ID')
+            outputs.append(temp)
+        elif('if' in l or'then'in l or'else'in l or 'end'in l or 'repeat'in l or'until'in l or'read'in l or'write'in l ):
+            temp = token(tokens[0], 'reserved words')
+            outputs.append(temp)
+        elif (':=' in l or'+'in l or'-'in l or'*'in l or'/'in l or'='in l or'<'in l or'('in l or')'in l or';'in l):
+            temp = token(tokens[0], 'special symbols')
+            outputs.append(temp)
+        else:
+            temp = token(tokens[0], tokens[1])
+            outputs.append(temp)
+    return outputs
+
+
+
 def main(lines):
-    gr.outputs = src.scanner(lines)
-    gr.program()
-    gr.generate_tree()
+    if(label3.cget("text") == "Code"):
+        gr.outputs = src.scanner(lines)
+        gr.program()
+        gr.generate_tree()
+    elif(label3.cget("text") == "Parse"):
+        gr.outputs = parser_input(lines)
+        gr.program()
+        gr.generate_tree()
+
+
 win.title("Tiny Language Parser")
 win.configure(background='#303138')
 win.geometry("850x650")
-win.geometry("850x650")
+win.geometry("1000x650")
 win.resizable(False,False)
 
 #----------------------------
@@ -79,6 +111,14 @@ E2.pack()
 E2.place(x= 10, y= 210)
 
 #----------------------------
+#Entry of Tokens to be parsed
+#----------------------------
+
+E3 = Text(win, width = 40, height = 22)
+E3.pack()
+E3.place(x= 600, y= 210)
+
+#----------------------------
 #label above Directory Entry
 #----------------------------
 
@@ -93,6 +133,14 @@ Dir.place(bordermode=INSIDE, x=100, y=90)
 Code = tk.Label(win , text= "Enter Code:")
 Code.pack()
 Code.place(bordermode=INSIDE, x=10, y=180)
+
+#----------------------------
+#label above Token entery
+#----------------------------
+
+Tokens = tk.Label(win , text= "Enter Tokens:")
+Tokens.pack()
+Tokens.place(bordermode=INSIDE, x=600, y=180)
 
 #----------------------------
 #Functions:
@@ -113,6 +161,12 @@ def sel():
        E2.config(state='normal')
        E2.delete('1.0', END)
        E1.delete(0, END)
+   elif x == 3:
+       label3.config(text="Parse")
+       E1.config(state='disabled')
+       E2.config(state='normal')
+       E3.delete('1.0', END)
+       E1.delete(0, END)
 
 def main_RUN():
     x = var.get()
@@ -131,13 +185,27 @@ def main_RUN():
             main(lines)
         else:
             label2.config(text="Status: Error, please enter code at first!")
+    elif(x == 3):
+        if (len(E3.get(1.0, END)) > 1):
+            label2.config(text="Status: Parsing is Running...")
+            lines = E3.get(1.0, END)
+            lines = lines.split()
+            main(lines)
+        else:
+            label2.config(text="Status: Error, please enter tokens at first!")
     else:
         label2.config(text="Status: Error, please select an entry method!")
+
+
+
+
 def OpenFileGui():
     filename = askopenfilename()
     if(len(Entry.get(E1))):
         E1.delete(0,END)
     E1.insert(END,filename)
+
+
 def show():
     if(len(Entry.get(E1))):
         lines = readfromfile(Entry.get(E1))
@@ -151,16 +219,28 @@ def show():
 #Buttons:
 #----------------------------
 
-R1 = Radiobutton(win, text = "Directory", selectcolor= "black", highlightcolor = "black", activebackground="#2f4f4f", variable = var, value = 1, command = sel)
+R1 = Radiobutton(win, text = "Directory", selectcolor= "white", highlightcolor = "black", activebackground="red", variable = var, value = 1, command = sel)
 R1.pack()
 R1.place(bordermode=OUTSIDE, x=20, y=90)
 
-R2 = Radiobutton(win, text = "Code", selectcolor= "black", highlightcolor = "black",activebackground="#2f4f4f", variable = var, value = 2, command = sel)
+R2 = Radiobutton(win, text = "Code", selectcolor= "white", highlightcolor = "black",activebackground="red", variable = var, value = 2, command = sel)
 R2.pack()
 R2.place(bordermode=OUTSIDE, x=20, y=110)
+
+R3 = Radiobutton(win, text = "Tokens", selectcolor= "white", highlightcolor = "black",activebackground="red", variable = var, value = 3, command = sel)
+R3.pack()
+R3.place(bordermode=OUTSIDE, x=20, y=130)
+
+
 Run = tk.Button(win, text = "Run", command = main_RUN,  width = 10,activebackground= "black", activeforeground = "green")
 Run.pack()
-Run.place(x=300, y=600)
+Run.place(x=250, y=600)
+
+# Parse = tk.Button(win, text = "Parse", command = BEGIN_PARSE(),  width = 10,activebackground= "black", activeforeground = "green")
+# Parse.pack()
+# Parse.place(x=740, y=600)
+
+
 OpenFile = tk.Button(win, text = "Open File", command = OpenFileGui,  width = 10,activebackground= "black", activeforeground = "green")
 OpenFile.pack()
 OpenFile.place(x=650, y=90)
