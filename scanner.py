@@ -1,12 +1,41 @@
 reservedwords = ['if','then','else','end','repeat','until','read','write']
 specialsymbols = [':=','+','-','*','/','=','<', '(',')',';']
 
+symbolsToType = {
+    'if':'IF',
+    'then':'THEN',
+    'else':'ELSE',
+    'end':'END',
+    'repeat':'REPEAT',
+    'until':'UNTIL',
+    'read':'READ',
+    'write':'WRITE',
+    ':=':'ASSIGN',
+    '+':'PLUS',
+    '-':'MINUS',
+    '*':'MULT',
+    '/':'DIV',
+    '=':'EQUAL',
+    '<':'LESSTHAN',
+    '(':'OPENBRACKET',
+    ')':'CLOSEDBRACKET',
+    ';':'SEMICOLON'
+}
+
 
 def saveTokens(outputs):
     """save tokens to file 'scannerTokens.txt"""
     f = open("scannerTokens.txt", "w")
+    tokenType = ''
     for i in outputs:
-        f.write(i.tokenvalue + "," + i.tokentype + "\n")
+        if(i.tokentype == 'reserved words' or i.tokentype == 'special symbols'):
+            tokenType = symbolsToType[i.tokenvalue]
+        elif (i.tokentype == "ID"):
+            tokenType = "IDENTIFIER"
+        else:
+            tokenType = i.tokentype
+
+        f.write(i.tokenvalue + "," + tokenType + "\n")
     f.close()
 
 
