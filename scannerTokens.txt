@@ -1,0 +1,4 @@
+x,ID
+:=,special symbols
+2,NUM
+;,special symbols

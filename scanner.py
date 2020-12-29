@@ -1,5 +1,16 @@
 reservedwords = ['if','then','else','end','repeat','until','read','write']
 specialsymbols = [':=','+','-','*','/','=','<', '(',')',';']
+
+
+def saveTokens(outputs):
+    """save tokens to file 'scannerTokens.txt"""
+    f = open("scannerTokens.txt", "w")
+    for i in outputs:
+        f.write(i.tokenvalue + "," + i.tokentype + "\n")
+    f.close()
+
+
+
 class token:
     tokenvalue=""
     tokentype=""
@@ -41,6 +52,8 @@ class token:
             return True
         else:
             return False
+
+
 def scanner(given_lines):
     lines = [s.rstrip() for s in given_lines]
     lines = [s.lstrip() for s in lines]
@@ -115,6 +128,13 @@ def scanner(given_lines):
                         currentstate='start'
                         mytoken = token(char,"special symbols")
                         outputs.append(mytoken)
+
+    saveTokens(outputs)
+
     return outputs
+
+#TODO
+#output -> textfile
+#this text file can be read by the parser
 
 
