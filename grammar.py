@@ -256,3 +256,10 @@ def generate_tree():
     currentnode = 1
     connectParent = True
     return
+
+#TODO
+"""
+1- fix left associativity
+2- fix weird END
+3- opearation must output two children not 3
+"""
