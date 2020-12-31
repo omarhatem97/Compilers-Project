@@ -1,0 +1,160 @@
+x,ID
+:=,special symbols
+2,NUM
+;,special symbols
+y,ID
+:=,special symbols
+32436,NUM
+;,special symbols
+z,ID
+:=,special symbols
+5,NUM
+;,special symbols
+a,ID
+:=,special symbols
+x,ID
+-,special symbols
+y,ID
+-,special symbols
+z,ID
++,special symbols
+2,NUM
++,special symbols
+1,NUM
++,special symbols
+3,NUM
+;,special symbols
+if,reserved words
+z,ID
+<,special symbols
+8,NUM
+then,reserved words
+repeat,reserved words
+a,ID
+:=,special symbols
+a,ID
+*,special symbols
+2,NUM
+;,special symbols
+z,ID
+:=,special symbols
+z,ID
+-,special symbols
+1,NUM
+;,special symbols
+repeat,reserved words
+read,reserved words
+x,ID
+;,special symbols
+write,reserved words
+x,ID
+;,special symbols
+if,reserved words
+(,special symbols
+(,special symbols
+x,ID
+<,special symbols
+4,NUM
+),special symbols
+),special symbols
+then,reserved words
+x,ID
+:=,special symbols
+x,ID
++,special symbols
+1,NUM
++,special symbols
+2,NUM
++,special symbols
+3,NUM
++,special symbols
+4,NUM
++,special symbols
+s,ID
+else,reserved words
+x,ID
+:=,special symbols
+x,ID
+-,special symbols
+1,NUM
+end,reserved words
+until,reserved words
+x,ID
+<,special symbols
+5,NUM
+until,reserved words
+z,ID
+=,special symbols
+0,NUM
+;,special symbols
+write,reserved words
+a,ID
+;,special symbols
+read,reserved words
+b,ID
+else,reserved words
+read,reserved words
+b,ID
+;,special symbols
+if,reserved words
+b,ID
+=,special symbols
+-1,NUM
+then,reserved words
+write,reserved words
+b,ID
+*,special symbols
+(,special symbols
+x,ID
+-,special symbols
+y,ID
+),special symbols
+;,special symbols
+if,reserved words
+x,ID
+=,special symbols
+1,NUM
+then,reserved words
+x,ID
+:=,special symbols
+x,ID
++,special symbols
+1,NUM
+else,reserved words
+read,reserved words
+x,ID
+end,reserved words
+else,reserved words
+write,reserved words
+a,ID
+;,special symbols
+write,reserved words
+z,ID
+end,reserved words
+;,special symbols
+read,reserved words
+b,ID
+end,reserved words
+;,special symbols
+write,reserved words
+z,ID
+;,special symbols
+write,reserved words
+x,ID
+*,special symbols
+x,ID
+*,special symbols
+x,ID
+;,special symbols
+read,reserved words
+x,ID
+;,special symbols
+x,ID
+:=,special symbols
+x,ID
+*,special symbols
+4,NUM
+/,special symbols
+2,NUM
+*,special symbols
+s,ID

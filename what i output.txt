@@ -1,0 +1,160 @@
+x,ID
+:=,NUM
+2,NUM
+;,NUM
+y,ID
+:=,NUM
+32436,NUM
+;,NUM
+z,ID
+:=,NUM
+5,NUM
+;,NUM
+a,ID
+:=,NUM
+x,ID
+-,special symbols
+y,ID
+-,special symbols
+z,ID
++,NUM
+2,NUM
++,NUM
+1,NUM
++,NUM
+3,NUM
+;,NUM
+if,reserved words
+z,ID
+<,NUM
+8,NUM
+then,reserved words
+repeat,reserved words
+a,ID
+:=,NUM
+a,ID
+*,NUM
+2,NUM
+;,NUM
+z,ID
+:=,NUM
+z,ID
+-,special symbols
+1,NUM
+;,NUM
+repeat,reserved words
+read,reserved words
+x,ID
+;,NUM
+write,reserved words
+x,ID
+;,NUM
+if,reserved words
+(,NUM
+(,NUM
+x,ID
+<,NUM
+4,NUM
+),NUM
+),NUM
+then,reserved words
+x,ID
+:=,NUM
+x,ID
++,NUM
+1,NUM
++,NUM
+2,NUM
++,NUM
+3,NUM
++,NUM
+4,NUM
++,NUM
+s,ID
+else,reserved words
+x,ID
+:=,NUM
+x,ID
+-,special symbols
+1,NUM
+end,reserved words
+until,reserved words
+x,ID
+<,NUM
+5,NUM
+until,reserved words
+z,ID
+=,NUM
+0,NUM
+;,NUM
+write,reserved words
+a,ID
+;,NUM
+read,reserved words
+b,ID
+else,reserved words
+read,reserved words
+b,ID
+;,NUM
+if,reserved words
+b,ID
+=,NUM
+-1,NUM
+then,reserved words
+write,reserved words
+b,ID
+*,NUM
+(,NUM
+x,ID
+-,special symbols
+y,ID
+),NUM
+;,NUM
+if,reserved words
+x,ID
+=,NUM
+1,NUM
+then,reserved words
+x,ID
+:=,NUM
+x,ID
++,NUM
+1,NUM
+else,reserved words
+read,reserved words
+x,ID
+end,reserved words
+else,reserved words
+write,reserved words
+a,ID
+;,NUM
+write,reserved words
+z,ID
+end,reserved words
+;,NUM
+read,reserved words
+b,ID
+end,reserved words
+;,NUM
+write,reserved words
+z,ID
+;,NUM
+write,reserved words
+x,ID
+*,NUM
+x,ID
+*,NUM
+x,ID
+;,NUM
+read,reserved words
+x,ID
+;,NUM
+x,ID
+:=,NUM
+x,ID
+*,NUM
+4,NUM
+/,NUM
+2,NUM
+*,NUM
+s,ID

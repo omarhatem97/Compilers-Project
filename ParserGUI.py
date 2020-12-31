@@ -30,20 +30,36 @@ def parser_input(lines):
             temp = token(tokens[0], 'reserved words')
             outputs.append(temp)
         elif (':=' in l or'+'in l or'-'in l or'*'in l or'/'in l or'='in l or'<'in l or'('in l or')'in l or';'in l):
-            temp = token(tokens[0], 'special symbols')
+            #handle - because w have two cases (-1,NUM  and -,MINUS)
+            if('-,' in l):
+                temp = token(tokens[0], 'special symbols')
+            else:
+                temp = token(tokens[0], 'NUM')
             outputs.append(temp)
         else:
             temp = token(tokens[0], tokens[1])
             outputs.append(temp)
+        save_to_file(outputs, "what i output.txt")
     return outputs
+
+
+def save_to_file(outputs, filename):
+    f = open(filename, "w")
+    for i in outputs:
+        f.write(i.tokenvalue + "," + i.tokentype + "\n")
+    f.close()
+
 
 
 
 def main(lines):
     if(label3.cget("text") == "Code"):
         gr.outputs = src.scanner(lines)
+        save_to_file(gr.outputs,"whatheoutputs.txt") #for debugging
         gr.program()
-        gr.draw_tree()
+        # if(gr.ERROR):
+        #
+        gr.generate_tree()
     elif(label3.cget("text") == "Parse"):
         gr.outputs = parser_input(lines)
         gr.program()
