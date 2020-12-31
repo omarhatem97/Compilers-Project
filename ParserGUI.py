@@ -43,7 +43,7 @@ def main(lines):
     if(label3.cget("text") == "Code"):
         gr.outputs = src.scanner(lines)
         gr.program()
-        gr.generate_tree()
+        gr.draw_tree()
     elif(label3.cget("text") == "Parse"):
         gr.outputs = parser_input(lines)
         gr.program()
