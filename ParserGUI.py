@@ -52,18 +52,32 @@ def save_to_file(outputs, filename):
 
 
 
+
 def main(lines):
+
     if(label3.cget("text") == "Code"):
+        gr.reset()
         gr.outputs = src.scanner(lines)
         save_to_file(gr.outputs,"whatheoutputs.txt") #for debugging
+        gr.set_error() #set error = zero
         gr.program()
-        # if(gr.ERROR):
-        #
         gr.generate_tree()
+        print(gr.get_error())
+        if(gr.get_error()): #handling errors
+            label2.cget("text") == "ERROR! code can't be parsed!"
+
+
+        # gr.generate_tree()
+
     elif(label3.cget("text") == "Parse"):
         gr.outputs = parser_input(lines)
+        #gr.set_error()  # set error = zero
         gr.program()
-        gr.generate_tree()
+        print(gr.get_error())
+        if (gr.get_error()):  # handling errors
+            label2.cget("text") == "ERROR! code can't be parsed!"
+        else:
+            gr.generate_tree()
 
 
 win.title("Tiny Language Parser")

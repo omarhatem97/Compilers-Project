@@ -10,6 +10,30 @@ connectParent = True
 ERROR = 0 # =1 if the code can't be parsed
 
 
+
+def reset():
+    """reset global vars so that when grammer.py is called again it can behave correctly"""
+    global outputs,iterator,Nodes, Parents,currentnode,connectParent,ERROR
+    outputs = []
+    iterator = 0
+    Nodes = []
+    Parents = []
+    Parents.append(0)
+    currentnode = 1
+    connectParent = True
+    ERROR = 0  # =1 if the code can't be parsed
+
+
+
+def get_error():
+    global ERROR
+    return ERROR
+
+def set_error():
+    global ERROR
+    ERROR = 0
+
+
 class node:
     parentNode = 0
     value = ""
@@ -32,11 +56,14 @@ class node:
 
 def match(expectedtoken):
     global iterator, ERROR
+    print('expected token:' + expectedtoken +'  , tokenvalue:' + outputs[iterator].tokenvalue + ', tokentype:' +outputs[iterator].tokentype)
     if(outputs[iterator].tokenvalue==expectedtoken)or(outputs[iterator].tokentype==expectedtoken):
         iterator += 1
     else:
-       ERROR = 1
-       iterator = -1
+        if (outputs[iterator].tokentype != "END"):
+            print('match error !')
+            ERROR = 1
+            iterator = -1
 
 
 def program():
@@ -57,6 +84,7 @@ def stmtsequence():
 
 def statment():
     global iterator,currentnode,connectParent, ERROR
+    # print('token value:' + outputs[iterator].tokentype)
     if(len(outputs)):
         newnode = node(outputs[iterator].tokenvalue,currentnode, Parents[-1])
         newnode.connectParent =connectParent
@@ -75,13 +103,15 @@ def statment():
         elif(outputs[iterator].tokenvalue=="write"):
             write_stmt()
             Parents.pop()
-        elif (outputs[iterator].tokenvalue == ":="):
+        elif(outputs[iterator].tokentype=="ID"):
             Nodes[-1].value = "assign\n(" + outputs[iterator].tokenvalue + ")"
             assign_stmt()
             Parents.pop()
         else:
-            ERROR = 1
-            return
+            if(outputs[iterator].tokentype!="END"):
+                print('statement error !')
+                ERROR = 1
+                return
 
 
 
@@ -304,41 +334,43 @@ def factor():
 
 
 def generate_tree():
-    global iterator,connectParent,currentnode
-    dot = Graph(comment='Syntax Tree',format = 'png')
-    # for Node in Nodes:
-    for Node in Nodes:
-        if(Node.value=="assign\n(" + "END" + ")"):
-            Nodes.remove(Node)
+    global iterator,connectParent,currentnode,ERROR
+    if(ERROR != 1):
+        dot = Graph(comment='Syntax Tree', format='png')
+        # for Node in Nodes:
+        for Node in Nodes:
+            if (Node.value == "assign\n(" + "END" + ")"):
+                Nodes.remove(Node)
 
-    for Node in Nodes:
-        if(Node.is_statment()):
-            dot.node(str(Node.Node),Node.value,shape='square')
-        else:
-            dot.node(str(Node.Node),Node.value)
-    for Node in Nodes:
-        if(Node.parentNode!=0)and (Node.connectParent):
-            dot.edge(str(Node.parentNode),str(Node.Node))
-        elif (Node.parentNode!=0):
-            dot.edge(str(Node.parentNode),str(Node.Node),style='dashed', color='white')
-    for number in range(len(Nodes)):
-        for number2 in range(number+1,len(Nodes)):
-            if((Nodes[number].parentNode==Nodes[number2].parentNode) and
-            (not Nodes[number2].connectParent)and
-            Nodes[number2].is_statment() and (Nodes[number].is_statment())):
-                dot.edge(str(Nodes[number].Node),str(Nodes[number2].Node),constraint='false')
-                break
-            elif((Nodes[number].parentNode==Nodes[number2].parentNode) and
-            (Nodes[number2].connectParent)and
-            Nodes[number2].is_statment() and (Nodes[number].is_statment())):
-                break
-    dot.render('test-output/Syntax-Tree.gv',view=True)
-    while (len(outputs)):
-        outputs.pop()
-    while (len(Nodes)):
-        Nodes.pop()
-    iterator = 0
-    currentnode = 1
-    connectParent = True
-    return
+        for Node in Nodes:
+            if (Node.is_statment()):
+                dot.node(str(Node.Node), Node.value, shape='square')
+            else:
+                dot.node(str(Node.Node), Node.value)
+        for Node in Nodes:
+            if (Node.parentNode != 0) and (Node.connectParent):
+                dot.edge(str(Node.parentNode), str(Node.Node))
+            elif (Node.parentNode != 0):
+                dot.edge(str(Node.parentNode), str(Node.Node), style='dashed', color='white')
+        for number in range(len(Nodes)):
+            for number2 in range(number + 1, len(Nodes)):
+                if ((Nodes[number].parentNode == Nodes[number2].parentNode) and
+                        (not Nodes[number2].connectParent) and
+                        Nodes[number2].is_statment() and (Nodes[number].is_statment())):
+                    dot.edge(str(Nodes[number].Node), str(Nodes[number2].Node), constraint='false')
+                    break
+                elif ((Nodes[number].parentNode == Nodes[number2].parentNode) and
+                      (Nodes[number2].connectParent) and
+                      Nodes[number2].is_statment() and (Nodes[number].is_statment())):
+                    break
+        dot.render('test-output/Syntax-Tree.gv', view=True)
+        while (len(outputs)):
+            outputs.pop()
+        while (len(Nodes)):
+            Nodes.pop()
+        iterator = 0
+        currentnode = 1
+        connectParent = True
+        return
+
 

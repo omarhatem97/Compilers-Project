@@ -1,15 +1,4 @@
 x,ID
 :=,special symbols
-3,NUM
--,special symbols
-5,NUM
-+,special symbols
-4,NUM
--,special symbols
-6,NUM
-+,special symbols
-(,special symbols
-7,NUM
-*,special symbols
-8,NUM
-),special symbols
+2,NUM
+;,special symbols
