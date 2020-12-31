@@ -64,7 +64,7 @@ def main(lines):
         gr.generate_tree()
         print(gr.get_error())
         if(gr.get_error()): #handling errors
-            label2.cget("text") == "ERROR! code can't be parsed!"
+            label2.config(text="Syntax Error!")
 
 
         # gr.generate_tree()
@@ -75,7 +75,7 @@ def main(lines):
         gr.program()
         print(gr.get_error())
         if (gr.get_error()):  # handling errors
-            label2.cget("text") == "ERROR! code can't be parsed!"
+            label2.config(text="Syntax Error!")
         else:
             gr.generate_tree()
 

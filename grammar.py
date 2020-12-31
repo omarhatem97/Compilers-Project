@@ -73,7 +73,7 @@ def program():
 
 
 def stmtsequence():
-    global iterator,connectParent
+    global iterator,connectParent, ERROR
     connectParent = True
     statment()
     while( outputs[iterator].tokenvalue==';'):
@@ -108,7 +108,11 @@ def statment():
             assign_stmt()
             Parents.pop()
         else:
-            if(outputs[iterator].tokentype!="END"):
+            if(outputs[iterator].tokentype!="END" ):
+                print('statement error !')
+                ERROR = 1
+                return
+            elif(len(outputs)!=1 and outputs[iterator-1].tokenvalue == ';'): #check if you put ; in wrong place
                 print('statement error !')
                 ERROR = 1
                 return
