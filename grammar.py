@@ -268,12 +268,26 @@ def term():
         mulop()
         if(Nodes[currentnode - 4].value[1] == "p" and outputs[iterator - 3].tokenvalue == "("):
               tempParent = Parents[-2]
-              while ("*" in Nodes[tempParent].value):
+              while ("*" in Nodes[tempParent].value or "/" in Nodes[tempParent].value):
                   tempParent = Nodes[tempParent].parent
               Nodes[currentnode - 2].parentNode = tempParent
               Nodes[currentnode - 3].parentNode = Nodes[currentnode - 2].Node
               term()
               Nodes[currentnode - 2].parentNode = Nodes[currentnode - 3].Node
+        elif (("*" in Nodes[currentnode - 4].value or "/" in Nodes[currentnode - 4].value) and outputs[
+                iterator - 2].tokenvalue != ")"):
+            tempParent=Nodes[currentnode - 4].parentNode
+            Nodes[currentnode - 2].parentNode = tempParent
+            Nodes[currentnode - 4].parentNode = Nodes[currentnode - 2].Node
+            # Nodes[currentnode - 3].parentNode = Nodes[currentnode - 2].Node
+            term()
+            Nodes[currentnode - 2].parentNode = Nodes[currentnode - 3].Node
+
+        elif (("+"in Nodes[currentnode - 4].value or "-"in Nodes[currentnode - 4].value) and outputs[iterator - 2].tokenvalue != ")"):
+            Nodes[currentnode - 2].parent=Nodes[currentnode - 4].Node
+            Nodes[currentnode - 3].parentNode = Nodes[currentnode - 2].Node
+            term()
+            Nodes[currentnode - 2].parentNode = Nodes[currentnode - 3].Node
         elif(Nodes[currentnode-4].value[1]=="p" and outputs[iterator-3].tokenvalue!="("):
             tempParent=Nodes[currentnode - 4].parentNode
             lasttemp=tempParent
@@ -290,13 +304,6 @@ def term():
                 Nodes[lasttemp-1].parentNode = Nodes[currentnode - 2].Node
             term()
             Nodes[currentnode - 2].parentNode = Nodes[currentnode - 3].Node
-            # tempParent = Nodes[currentnode - 4].parentNode
-            # while("*" in Nodes[tempParent].value):
-            #     tempParent=Nodes[tempParent].parent
-            # Nodes[currentnode - 2].parentNode = tempParent
-            # Nodes[currentnode - 4].parentNode = Nodes[currentnode - 2].Node
-            # term()
-            # Nodes[currentnode - 2].parentNode = Nodes[currentnode - 3].Node
 
         else:
             Nodes[currentnode - 3].parentNode = Nodes[currentnode - 2].Node
@@ -306,6 +313,8 @@ def term():
     while(nestedOp>0):
         Parents.pop()
         nestedOp-=1
+
+
 def mulop():
     global iterator,currentnode
     newnode = node("Op\n("+outputs[iterator].tokenvalue+")",currentnode, Parents[-1])

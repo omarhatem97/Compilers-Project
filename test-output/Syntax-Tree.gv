@@ -1,42 +1,8 @@
 // Syntax Tree
 graph {
-	1 [label="read
+	1 [label="assign
 (x)" shape=square]
-	2 [label="read
-(y)" shape=square]
-	3 [label=if shape=square]
-	4 [label="const
-(0)"]
-	5 [label="Op
-(<)"]
-	6 [label="ID
-(x)"]
-	7 [label=if shape=square]
-	8 [label="ID
-(y)"]
-	9 [label="Op
-(<)"]
-	10 [label="const
-(1)"]
-	11 [label="assign
-(fact)" shape=square]
-	12 [label="const
-(134365)"]
-	13 [label="assign
-(z)" shape=square]
-	14 [label="const
-(1)"]
-	5 -- 4
-	3 -- 5
-	5 -- 6
-	3 -- 7
-	9 -- 8
-	7 -- 9
-	9 -- 10
-	7 -- 11
-	11 -- 12
-	7 -- 13
-	13 -- 14
-	1 -- 2 [constraint=false]
-	2 -- 3 [constraint=false]
+	2 [label="const
+(2)"]
+	1 -- 2
 }
